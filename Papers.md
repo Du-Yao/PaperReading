@@ -417,3 +417,34 @@ MS COCO
 
 ![image-20230306210043770](/Users/duyao/Library/Application Support/typora-user-images/image-20230306210043770.png)
 
+##### Latent Diffusion Models
+
+"Given training data, the diffusion process destroys the structure of the data by gradually adding Gaussian noise", such as
+$$
+x_t = \sqrt{\alpha_t}x_0 + \sqrt{1-\alpha_t}\epsilon_t
+$$
+"The inverse diffusion process is modeled by applying a nn $f_{\theta}(x_t, t)$ to the samples at each step to recover the original imput"
+
+**train objective:** $f_{\theta}(x, t) = \epsilon_t$ 
+
+Diffusion models can create realistic images from text. *text-to-image*
+
+Also can generate new text conditional images by editing the image. *image-to-image*
+
+In this work, used Laten Diffusion Model called Stable Diffusion. Text encoder used pretrained text encoder(CLIP)
+
+##### Decoding: reconstructing images from fMRI
+
+visual reconstruction from fMRI signals using LDM in three simple steps. The only training required is to construct linear models that map fMRI signals to each LDM.
+
+*image-to-image* + *text-to-image* + *DDIM Sampler*
+
+**Three steps:** 
+
+- predicted latent representation **z** from original image **X**. The decoder of autoencoder decodes the **$X_z$** from **z** and resized into 512x512. **Why used the images decoded rather than original image?**
+- encoded the $X_z$ as $z_T$ and noised through diffusion process.
+- inversed the noised latent presentation $z_T$ and decoded it into image by autoencoder.
+
+##### Encoding: Whole-brain Voxel-wise Modeling
+
+Tried to interpret the internal operations of LDMs by mapping them into brain activity.
